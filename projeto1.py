@@ -72,12 +72,12 @@ def produto_mais_caro(dados, categoria):
     produtos_categoria = listar_por_categoria(dados, categoria)
 
     prod_mais_caro = produtos_categoria[0]
-    preco_max = prod_mais_caro['preco']
+    preco_max = float(prod_mais_caro['preco'])
 
     for produto in produtos_categoria:
-        if produto['preco']>preco_max:
+        if float(produto['preco'])>preco_max:
             prod_mais_caro = produto
-            preco_max = produto['preco']
+            preco_max = float(produto['preco'])
 
     return prod_mais_caro
 
@@ -95,12 +95,12 @@ def produto_mais_barato(dados, categoria):
     produtos_categoria = listar_por_categoria(dados, categoria)
 
     prod_mais_barato = produtos_categoria[0]
-    preco_min = prod_mais_barato['preco']
+    preco_min = float(prod_mais_barato['preco'])
 
     for produto in produtos_categoria:
-        if produto['preco']<preco_min:
+        if float(produto['preco'])<preco_min:
             prod_mais_barato = produto
-            preco_min = produto['preco']
+            preco_min = float(produto['preco'])
 
     return prod_mais_barato
 
@@ -114,7 +114,7 @@ def top_10_caros(dados):
 
     for produto in dados:
         for i in range(10):
-            if produto['preco'] > top10[i]['preco']:
+            if float(produto['preco']) > float(top10[i]['preco']):
                 top10.pop(i)
                 top10.append(produto)
                 break
@@ -131,7 +131,7 @@ def top_10_baratos(dados):
 
     for produto in dados:
         for i in range(10):
-            if produto['preco'] < top10[i]['preco']:
+            if float(produto['preco']) < float(top10[i]['preco']):
                 top10.pop(i)
                 top10.append(produto)
                 break
@@ -144,7 +144,7 @@ def print_lista_dicts(lista):
     '''
 
     if type(lista)==list:
-        lista.sort(key = lambda x: x['preco'])
+        lista.sort(key = lambda x: float(x['preco']))
         for item in lista:
             print('Identificador: ',item['id'])
             print('preço = ',item['preco'],'   ','categoria = ',item['categoria'])
