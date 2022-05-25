@@ -11,7 +11,7 @@ def obter_dados():
         dados = json.loads(arq.read())
     return dados
 
-def listar_categorias(dados):
+def listar_categorias(dados:list) -> list:
     '''
     O parâmetro "dados" deve ser uma lista de dicionários representando os produtos.
     Essa função deverá retornar uma lista contendo todas as categorias dos diferentes produtos.
@@ -27,7 +27,7 @@ def listar_categorias(dados):
     
     return categorias
 
-def validar_categoria(dados,categoria):
+def validar_categoria(dados:list,categoria:str) -> bool:
     '''
     O parâmetro "dados" deve ser uma lista de dicionários representando os produtos.
     O parâmetro "categoria" é uma string contendo o nome de uma categoria.
@@ -39,16 +39,12 @@ def validar_categoria(dados,categoria):
     else:
         return False
 
-def listar_por_categoria(dados, categoria):
+def listar_por_categoria(dados:list,categoria:str) -> list:
     '''
     O parâmetro "dados" deve ser uma lista de dicionários representando os produtos.
     O parâmetro "categoria" é uma string contendo o nome de uma categoria.
     Essa função deverá retornar uma lista contendo todos os produtos pertencentes à categoria dada.
     '''
-
-    if not validar_categoria(dados,categoria):
-        print('A categoria é inválida!')
-        return 
 
     produtos_categoria = []
 
@@ -58,7 +54,7 @@ def listar_por_categoria(dados, categoria):
     
     return produtos_categoria
     
-def produto_mais_caro(dados, categoria):
+def produto_mais_caro(dados:list,categoria:str) -> dict:
     '''
     O parâmetro "dados" deve ser uma lista de dicionários representando os produtos.
     O parâmetro "categoria" é uma string contendo o nome de uma categoria.
@@ -81,7 +77,7 @@ def produto_mais_caro(dados, categoria):
 
     return prod_mais_caro
 
-def produto_mais_barato(dados, categoria):
+def produto_mais_barato(dados:list,categoria:str) -> dict:
     '''
     O parâmetro "dados" deve ser uma lista de dicionários representando os produtos.
     O parâmetro "categoria" é uma string contendo o nome de uma categoria.
@@ -104,7 +100,7 @@ def produto_mais_barato(dados, categoria):
 
     return prod_mais_barato
 
-def top_10_caros(dados):
+def top_10_caros(dados:list) -> list:
     '''
     O parâmetro "dados" deve ser uma lista de dicionários representando os produtos.
     Essa função deverá retornar uma lista de dicionários representando os 10 produtos mais caros.
@@ -121,7 +117,7 @@ def top_10_caros(dados):
 
     return top10
 
-def top_10_baratos(dados):
+def top_10_baratos(dados:list) -> list:
     '''
     O parâmetro "dados" deve ser uma lista de dicionários representando os produtos.
     Essa função deverá retornar uma lista de dicionários representando os 10 produtos mais baratos.
@@ -138,7 +134,7 @@ def top_10_baratos(dados):
 
     return top10
 
-def print_lista_dicts(lista):
+def print_lista_dicts(lista:list) -> None:
     '''
     O parâmetro lista é uma lista de dicionários, printados de forma mais amigável.
     '''
@@ -153,7 +149,7 @@ def print_lista_dicts(lista):
         print('Identificador: ',item['id'])
         print('preço = ',item['preco'],'   ','categoria = ',item['categoria'])
 
-def print_lista(lista):
+def print_lista(lista:list) -> None:
     '''
     O parâmetro lista recebe uma lista a ser colocada de forma mais bonita no output.
     A lista apenas é exibida com cada item em uma linha.
@@ -163,7 +159,7 @@ def print_lista(lista):
     for item in lista:
         print(item)
 
-def menu(dados):
+def menu(dados:list) -> None:
     '''
     O parâmetro "dados" deve ser uma lista de dicionários representando os produtos.
     Essa função deverá, em loop, realizar as seguintes ações:
@@ -197,17 +193,28 @@ def menu(dados):
             print_lista(listar_categorias(dados))
         elif opcao == 2:
             categoria = input('Selecione a categoria a ser listada: ')
-            print_lista(listar_por_categoria(dados,categoria))
+                if not validar_categoria(dados,categoria):
+                    print('A categoria é inválida!')
+                    continue
+            print_lista_dicts(listar_por_categoria(dados,categoria))
         elif opcao == 3:
             categoria = input('Selecione a categoria: ')
+                if not validar_categoria(dados,categoria):
+                    print('A categoria é inválida!')
+                    continue
             print_lista_dicts(produto_mais_caro(dados,categoria))
         elif opcao == 4:
             categoria = input('Selecione a categoria: ')
+                if not validar_categoria(dados,categoria):
+                    print('A categoria é inválida!')
+                    continue
             print_lista_dicts(produto_mais_barato(dados,categoria))
         elif opcao == 5:
             print_lista_dicts(top_10_caros(dados))
         elif opcao == 6:
             print_lista_dicts(top_10_baratos(dados))
+        else:
+            print('Entrada inválida!')
     else:
         print('Adeus!')
 
