@@ -18,8 +18,9 @@ def listar_categorias(dados:list) -> list:
     Cuidado para não retornar categorias repetidas.    
     '''
     categorias = [] 
+    [categorias.append(produto['categoria']) for produto in dados if produto['categoria'] not in categorias] 
 
-    return [categorias.append(produto['categoria']) for produto in dados if produto['categoria'] not in categorias] 
+    return categorias
 
 def validar_categoria(dados:list,categoria:str) -> bool:
     '''
@@ -38,9 +39,9 @@ def listar_por_categoria(dados:list,categoria:str) -> list:
     O parâmetro "categoria" é uma string contendo o nome de uma categoria.
     Essa função deverá retornar uma lista contendo todos os produtos pertencentes à categoria dada.
     '''
-    produtos_categoria = []
+    produtos_categoria = [produto for produto in dados if produto['categoria']==categoria]
     
-    return [produtos_categoria.append(produto['categoria']) for produto in dados if produto['categoria']==categoria]  
+    return produtos_categoria
     
 def produto_mais_caro(dados:list,categoria:str) -> dict:
     '''
@@ -50,7 +51,7 @@ def produto_mais_caro(dados:list,categoria:str) -> dict:
     '''
     produtos_categoria = listar_por_categoria(dados, categoria)
 
-    return sorted(produtos_categoria,key= lambda x: float(x['preco'],reverse = True))[0] 
+    return sorted(produtos_categoria,key= lambda x: float(x['preco']),reverse = True)[0] 
 
 def produto_mais_barato(dados:list,categoria:str) -> dict:
     '''
@@ -147,10 +148,10 @@ def menu(dados:list) -> None:
             print_lista_dicts(top_10_caros(dados))
         elif opcao == 6:
             print_lista_dicts(top_10_baratos(dados))
+        elif opcao == 0:
+            print('Adeus!')
         else:
             print('Entrada inválida!')
-    else:
-        print('Adeus!')
 
 # Programa Principal - não modificar!
 dados = obter_dados()
