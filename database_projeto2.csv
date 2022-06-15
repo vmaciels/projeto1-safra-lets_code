@@ -1,2 +1,5 @@
 nome,email,instrumentos,generos
 joão,j@gmail.com,['guitarra'],['rock']
+carol,carol@gmail.com,['baixo'],"['rock', 'punk']"
+nat,nat@gmail.com,['bateria'],['punk']
+vinicius,vmaciel@gmail.com,"['guitarra', 'baixo']","['rock', 'punk', 'metal']"
